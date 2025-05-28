@@ -1,0 +1,68 @@
+<div class="auth-container">
+  <h2>Create Your Account</h2>
+  <form [formGroup]="signupForm" (ngSubmit)="submit()">
+    <input
+      type="text"
+      placeholder="Full Name"
+      formControlName="name"
+      required
+    />
+    <div
+      *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid"
+    >
+      <small class="error">Name is required.</small>
+    </div>
+
+    <input type="email" placeholder="Email" formControlName="email" required />
+    <div
+      *ngIf="
+        signupForm.get('email')?.touched && signupForm.get('email')?.invalid
+      "
+    >
+      <small class="error" *ngIf="signupForm.get('email')?.errors?.['required']"
+        >Email is required.</small
+      >
+      <small class="error" *ngIf="signupForm.get('email')?.errors?.['email']"
+        >Invalid email format.</small
+      >
+    </div>
+
+    <input
+      type="password"
+      placeholder="Password"
+      formControlName="password"
+      required
+    />
+    <div
+      *ngIf="
+        signupForm.get('password')?.touched &&
+        signupForm.get('password')?.invalid
+      "
+    >
+      <small class="error">Password is required.</small>
+    </div>
+
+    <input
+      type="password"
+      placeholder="Confirm Password"
+      formControlName="confirmPassword"
+      required
+    />
+    <div *ngIf="signupForm.get('confirmPassword')?.touched">
+      <small
+        class="error"
+        *ngIf="signupForm.get('confirmPassword')?.errors?.['required']"
+        >Confirm Password is required.</small
+      >
+      <small class="error" *ngIf="signupForm.errors?.['passwordsMismatch']"
+        >Passwords do not match.</small
+      >
+    </div>
+
+    <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+
+    <p>
+      Already have an account? <a routerLink="/login" class="login">Login</a>
+    </p>
+  </form>
+</div>

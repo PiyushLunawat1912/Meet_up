@@ -1,0 +1,88 @@
+<!-- <section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="text">
+        <h1>Connect. Collaborate. Meet-Up.</h1>
+        <p>
+          Build real-time communities and workspaces with ease. Meet-Up is your
+          new communication hub.
+        </p>
+        <div class="actions">
+          <button routerLink="/signup" class="btn primary">Get Started</button>
+          <button routerLink="/about" class="btn outline">Learn More</button>
+        </div>
+      </div>
+      <div class="illustration">
+        <img
+          src="assets/illustration.png"
+          alt="Team collaboration illustration"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2>What You Can Do</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <img src="assets/icons/chat.svg" alt="Chat icon" />
+        <h3>Real-Time Messaging</h3>
+        <p>Communicate instantly in organized channels and threads.</p>
+      </div>
+      <div class="feature-card">
+        <img src="assets/icons/groups.svg" alt="Groups icon" />
+        <h3>Team Workspaces</h3>
+        <p>Create public or private groups for focused collaboration.</p>
+        <button routerLink="/signup" class="btn primary">s</button>
+      </div>
+      <div class="feature-card">
+        <img src="assets/icons/video.svg" alt="Video call icon" />
+        <h3>Voice & Video</h3>
+        <p>Meet face-to-face with built-in voice and video chat.</p>
+      </div>
+      <div class="feature-card">
+        <img src="assets/icons/integration.svg" alt="Integration icon" />
+        <h3>Third-Party Integrations</h3>
+        <p>Connect with tools like Google Drive, Notion, and more.</p>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- dashboard.component.html -->
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <!-- <div class="brand">Meet-Up</div> -->
+    <div class="user-info">
+      <!-- <p>Welcome, {{ username }}</p> -->
+    </div>
+
+    <div class="section">
+      <h4>Channels</h4>
+      <!-- <div *ngFor="let channel of channels" class="item">
+        # {{ channel.name }}
+      </div> -->
+    </div>
+
+    <div class="section">
+      <h4><button>Direct Messages</button></h4>
+      <!-- <div *ngFor="let dm of directMessages" class="item">
+        &#64; {{ dm.name }}
+      </div> -->
+    </div>
+
+    <div class="actions">
+      <button (click)="navigateToStartConversation()">
+        Start New Conversation
+      </button>
+
+      <button>Join a Channel</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <h2>Welcome to Meet-Up Start your Conversation</h2>
+  </main>
+</div>

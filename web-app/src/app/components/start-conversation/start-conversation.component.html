@@ -1,0 +1,10 @@
+<p>start-conversation works!</p>
+<div class="start-conversation-container">
+  <h2>Start a New Conversation</h2>
+  <form (ngSubmit)="onSubmit()">
+    <label for="recipient">Recipient Username:</label>
+    <input type="text" [(ngModel)]="recipient" name="recipient" required />
+
+    <button type="submit">Start</button>
+  </form>
+</div>
