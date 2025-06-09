@@ -1,10 +1,19 @@
-<p>start-conversation works!</p>
 <div class="start-conversation-container">
-  <h2>Start a New Conversation</h2>
-  <form (ngSubmit)="onSubmit()">
-    <label for="recipient">Recipient Username:</label>
-    <input type="text" [(ngModel)]="recipient" name="recipient" required />
-
-    <button type="submit">Start</button>
-  </form>
+  <div class="card">
+    <h2>Start a New Conversation</h2>
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+      <div class="form-group">
+        <label for="recipient">Recipient Username</label>
+        <input
+          type="text"
+          id="recipient"
+          name="recipient"
+          [(ngModel)]="recipient"
+          required
+          placeholder="Enter username"
+        />
+      </div>
+      <button type="submit" [disabled]="!form.valid">Start Conversation</button>
+    </form>
+  </div>
 </div>

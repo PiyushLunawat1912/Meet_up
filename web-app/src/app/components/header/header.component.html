@@ -2,13 +2,21 @@
   <div
     class="container-fluid d-flex justify-content-between align-items-center"
   >
-    <a class="navbar-brand" routerLink="/">MEET-UP</a>
+    <a class="navbar-brand" routerLink="/home">MEET-UP</a>
 
     <div class="nav-links d-flex align-items-center gap-4">
       <a class="nav-link" routerLink="/home">Home</a>
       <a class="nav-link" routerLink="/about">About</a>
       <a class="nav-link" routerLink="/Features"> Features </a>
-      <a></a>
+
+      <!-- Login Button -->
+
+      @if (authService.isLoggedIn) {
+      <span class="username">Hello, {{ authService.userName }}</span>
+      <button class="btn logout-btn" (click)="logout()">Logout</button>
+      } @else {
+      <button class="btn login-btn" routerLink="/login">Login</button>
+      }
     </div>
   </div>
 </nav>

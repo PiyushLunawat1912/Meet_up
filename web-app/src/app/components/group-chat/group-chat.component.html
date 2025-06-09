@@ -1,0 +1,44 @@
+<div class="chat-wrapper">
+  <h2 class="chat-title">Group Chat</h2>
+
+  <!-- Message list -->
+  <div class="messages-container">
+    <div
+      class="message"
+      *ngFor="let msg of messages"
+      [ngClass]="{
+        sent: msg.sender._id === currentUserId,
+        received: msg.sender._id !== currentUserId
+      }"
+    >
+      <!-- Show sender name if message is received (for group context) -->
+      <div class="sender-name" *ngIf="msg.sender._id !== currentUserId">
+        {{ msg.sender.name }}
+      </div>
+      <div class="message-text">{{ msg.text }}</div>
+      <div class="timestamp">{{ msg.timestamp | date : "shortTime" }}</div>
+    </div>
+  </div>
+
+  <!-- Input form -->
+  <form class="input-form" (ngSubmit)="sendMessage()">
+    <input
+      type="text"
+      [(ngModel)]="newMessage"
+      name="message"
+      placeholder="Type a message"
+      required
+    />
+    <!-- Toggle emoji picker -->
+    <button type="button" (click)="showEmojiPicker = !showEmojiPicker">
+      😊
+    </button>
+
+    <!-- Emoji picker -->
+    <div *ngIf="showEmojiPicker">
+      <emoji-mart set="apple" (emojiSelect)="addEmoji($event)"></emoji-mart>
+    </div>
+
+    <button type="submit">Send</button>
+  </form>
+</div>

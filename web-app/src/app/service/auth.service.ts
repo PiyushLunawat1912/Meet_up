@@ -24,5 +24,21 @@ export class AuthService {
   })
 }
 
+get isLoggedIn() {
+  return !!localStorage.getItem('token');
+}
+
+get userName() {
+  let userData = localStorage.getItem("user");
+  if (userData) {
+    return JSON.parse(userData).name;
+  }
+  return null;
+}
+
+logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+}
 
 }

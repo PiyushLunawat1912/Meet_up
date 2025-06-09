@@ -8,6 +8,9 @@ const authRoutes = require("./routes/auth");
 const conversationRoutes = require('./routes/conversation');
 const UserAuth = require('./db/user');
 const Conversation = require('./models/Conversation');
+const groupRoutes = require('./routes/groupChat');
+const GroupChat = require('./models/groupChat'); // ✅ Add this
+
 
 const app = express();
 const port = 3000;
@@ -19,6 +22,8 @@ app.use(express.json());
 // Routes
 app.use("/auth", authRoutes);
 app.use('/api/conversation', conversationRoutes);
+app.use('/group', groupRoutes);
+
 
 // Root route
 app.get("/", (req, res) => {
@@ -90,12 +95,46 @@ io.on('connection', (socket) => {
     }
   });
 
+    socket.on('join-group', (groupId) => {
+    socket.join(groupId);
+  });
+
+  socket.on('send-group-message', async (data) => {
+    try {
+      const senderUser = await UserAuth.findById(data.sender).select('name');
+      if (!senderUser) return;
+
+      const fullMessage = {
+        sender: {
+          _id: senderUser._id,
+          name: senderUser.name
+        },
+        text: data.text,
+        timestamp: data.timestamp || new Date()
+      };
+
+      await GroupChat.findByIdAndUpdate(
+        data.groupId,
+        { $push: { messages: { sender: senderUser._id, text: data.text, timestamp: data.timestamp } } }
+      );
+
+      socket.to(data.groupId).emit('receive-group-message', fullMessage);
+    } catch (err) {
+      console.error('Group message error:', err);
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log('Socket disconnected:', socket.id);
   });
 });
 
+
+
 // Start both Express and Socket.IO servers on the same port
 server.listen(port, () => {
   console.log(`Server (API + Socket.IO) running on http://localhost:${port}`);
 });
+
+
+

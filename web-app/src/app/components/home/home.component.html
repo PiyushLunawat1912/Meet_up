@@ -60,29 +60,73 @@
     </div>
 
     <div class="section">
-      <h4>Channels</h4>
-      <!-- <div *ngFor="let channel of channels" class="item">
-        # {{ channel.name }}
-      </div> -->
-    </div>
-
-    <div class="section">
       <h4><button>Direct Messages</button></h4>
-      <!-- <div *ngFor="let dm of directMessages" class="item">
-        &#64; {{ dm.name }}
-      </div> -->
+      <ul>
+        <li
+          *ngFor="let convo of conversation"
+          (click)="openChat(convo._id)"
+          class="item"
+        >
+          <!-- Add initials or emoji if you don't use avatars -->
+          <span class="dm-user-name">💬 {{ convo.user.name }}</span>
+        </li>
+      </ul>
     </div>
 
+    <!-- Channels (User's Joined Groups) -->
+    <h4>Channels</h4>
+    <ul>
+      <li
+        *ngFor="let group of userGroups"
+        (click)="openGroupChat(group._id)"
+        class="item"
+      >
+        <span class="group-name">💬{{ group.name }}</span>
+      </li>
+    </ul>
+
+    <!-- Group Creation Section -->
+    <div class="group-create-section">
+      <h3>Create New Group</h3>
+
+      <form (ngSubmit)="createGroup()" class="group-form">
+        <input
+          type="text"
+          [(ngModel)]="groupName"
+          name="groupName"
+          placeholder="Enter group name"
+          required
+        />
+
+        <!-- 🟡 User Selection Section -->
+        <div class="user-selection" *ngIf="allUsers.length > 0; else noUsers">
+          <label *ngFor="let user of allUsers">
+            <input
+              type="checkbox"
+              [value]="user._id"
+              [checked]="selectedUserIds.includes(user._id)"
+              (change)="toggleUserSelection(user._id, $event)"
+            />
+            {{ user.name }}
+          </label>
+        </div>
+
+        <!-- 🔴 Show message if no users found -->
+        <ng-template #noUsers>
+          <p>No users available to add to the group.</p>
+        </ng-template>
+
+        <button type="submit">Create Group</button>
+      </form>
+    </div>
     <div class="actions">
       <button (click)="navigateToStartConversation()">
         Start New Conversation
       </button>
 
-      <button>Join a Channel</button>
+      <main class="main-content">
+        <h2>Welcome to Meet-Up Start your Conversation</h2>
+      </main>
     </div>
   </aside>
-
-  <main class="main-content">
-    <h2>Welcome to Meet-Up Start your Conversation</h2>
-  </main>
 </div>

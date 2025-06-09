@@ -12,7 +12,7 @@ router.post('/start', async (req, res) => {
     if (!recipient) return res.status(404).send('Recipient not found');
 
     const recipientId = recipient._id;
-
+  v
     // Check if conversation already exists
     let convo = await Conversation.findOne({
       participants: { $all: [senderId, recipientId] }
@@ -50,6 +50,22 @@ router.get('/:id', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// Get all conversations for a user
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const conversations = await Conversation.find({
+      participants: req.params.userId
+    }).populate('participants', 'name'); // get participant names
+
+    res.json(conversations);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+
 
 
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const { signupUser, loginUser } = require("../handlers/auth-handler.js"); 
-
+const UserAuth = require("../db/user.js"); // Assuming this is the correct path to your UserAuth model
 const router = express.Router();
 
 
@@ -45,6 +45,17 @@ router.post("/login", async (req, res) => {
     res.status(500).json({
       error: "Internal server error"
     });
+  }
+});
+
+// GET /auth/all-users
+router.get('/all-users', async (req, res) => {
+  try {
+    const users = await UserAuth.find({}, '_id name'); // only return _id and name
+    res.json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ error: 'Failed to fetch users' });
   }
 });
 
